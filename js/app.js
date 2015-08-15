@@ -73,14 +73,17 @@
             var img = document.getElementsByClassName('kitten-img')[0];
             var counter = document.getElementsByClassName('counter')[0];
 
+            // Click Event listeners for the list items
             for(var i = 0, len = listItems.length; i < len; ++i) {
                 listItems[i].addEventListener('click', function(i) {
                     img.src = kittens[i].url;
                     listView.highlightListItem(kittens[i]);
                     photoView.render(model.getAllKittens()[i]);
+                    controller.updateAdminPanel(document.getElementsByTagName('input'));
                 }.bind(this, i));
             }
 
+            // Click Event listener for the image
             img.addEventListener('click', function() {
                 currentKitten = document.getElementsByClassName('active')[0]
                                         .innerText;
@@ -89,7 +92,101 @@
                 model.incCounter(index);
 
                 photoView.render(model.getAllKittens()[index]);
+
+                controller.updateAdminPanel(document.getElementsByTagName('input'));
             });
+
+            // Click Event listener for the Admin button
+            document.getElementsByClassName('btn-admin')[0]
+              .addEventListener('click', function() {
+                var elements = document.getElementsByTagName('input');
+                for(var i = 0, len = elements.length; i < len; ++i) {
+                    controller.toggleClass(elements[i], 'hidden');
+                };
+                controller.toggleClass(
+                    document.getElementsByClassName('btn-group')[0],
+                    'hidden'
+                );
+
+                var photo = document.getElementsByClassName('photo-placeholder')[0];
+
+                if(photo.style.marginTop === '4em') {
+                    photo.style.marginTop = '6px';
+                } else {
+                    photo.style.marginTop = '4em';
+                }
+
+                controller.updateAdminPanel(elements);
+            });
+
+            controller._addEventListenerToSaveButton();
+
+        },
+
+        getCurrentKitten: function() {
+            var currentKitten = document.getElementsByClassName('active')[0]
+                                        .innerText;
+            index = controller.getCurrentKittenIndex(currentKitten);
+            return controller.getAllKittens()[index];
+        },
+
+        updateAdminPanel: function(elements) {
+            var currentKitten = document.getElementsByClassName('active')[0]
+                                        .innerText;
+            index = controller.getCurrentKittenIndex(currentKitten);
+            if(index || index === 0) {
+                var currentKitten = controller.getAllKittens()[index];
+                elements[0].value = currentKitten.name;
+                elements[1].value = currentKitten.url;
+                elements[2].value = currentKitten.counter;
+            }
+        },
+
+        _addEventListenerToSaveButton: function() {
+            var saveBtn = document.getElementsByClassName('btn-save')[0];
+            saveBtn.addEventListener('click', function() {
+                var currentKittenIndex = controller
+                    .getCurrentKittenIndex(document.getElementsByClassName('active')[0]
+                                                   .innerText);
+                var elements = document.getElementsByTagName('input');
+                var name = elements[0].value;
+                var kittens = controller.getAllKittens();
+                var shouldSave = true;
+                for(var i = 0, len = kittens.length; i < len; ++i) {
+                    if(kittens[i].name == name && i != currentKittenIndex) {
+                        alert('The name "' + name + '" already exists. ' + 
+                            'Please find another name.');
+                        shouldSave = false
+                    }
+                };
+                if(shouldSave) {
+                    kittens[currentKittenIndex].name = name;
+                    kittens[currentKittenIndex].url = elements[1].value;
+                    kittens[currentKittenIndex].counter = elements[2].value;
+                    model.save(kittens);
+
+                    listView.render(model.getAllKittens().length);
+                    photoView.init();
+                    photoView.render(model.getAllKittens()[currentKittenIndex]);
+                }
+            });
+        },
+
+        toggleClass: function(el, className) {
+            if(el.classList) {
+                el.classList.toggle(className);
+            } else {
+                var classes = el.className.split(' ');
+                var existingIndex = classes.indexOf(className);
+
+                if(existingIndex >= 0) {
+                    classes.splice(existingIndex, 1);
+                } else {
+                    classes.push(className);
+                }
+
+                el.className = classes.join(' ');
+            }
         }
     };
 
@@ -100,6 +197,11 @@
         },
 
         render: function(kittensCount) {
+            var checkForContainer = document.getElementById('kittens-container');
+            var list = document.getElementsByClassName('kittens-list')[0];
+            if(list && checkForContainer) {
+                checkForContainer.parentNode.removeChild(checkForContainer);
+            }
 
             var kittensContainer = document.createElement('div');
             kittensContainer.id = 'kittens-container';
@@ -116,7 +218,8 @@
             for(var i = 0, kittensCount = array.length; i <  kittensCount; ++i){
                 // create <li> item
                 var kittenItem = document.createElement('li');
-                kittenItem.innerHTML = array[i].name;       
+                kittenItem.innerHTML = array[i].name;    
+                if(i == 0) kittenItem.className = 'active';
                 // add <li> to <ul>
                 listElement.appendChild(kittenItem);
             }

@@ -6,7 +6,19 @@
 	<link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
-	<div class="container"></div>
+	<div class="container">
+		<div class="admin">		
+			<form class='admin-form'>
+				<button type="button" class="btn btn-admin">Admin</button>
+				<input type="text" name="name" class="name hidden" placeholder="Name">
+				<input type="text" name="ImgUrl" class="img-url hidden" placeholder="Image url">
+				<input type="number" name="clicks" class="clicks hidden" placeholder="Clicks number">
+				<div class="btn-group hidden">
+					<button type="button" class="btn btn-save">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
 	<script src="./js/app.js"></script>
 </body>
 </html>

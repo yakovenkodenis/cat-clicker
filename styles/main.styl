@@ -2,6 +2,14 @@
 	-webkit-box-sizing border-box 
 	-moz-box-sizing border-box 
 	box-sizing border-box
+	-webkit-transition .3s all ease-in-out 
+	-moz-transition .3s all ease-in-out 
+	-ms-transition .3s all ease-in-out 
+	-o-transition .3s all ease-in-out 
+	transition .3s all ease-in-out 
+	
+.hidden
+	display none !important
 
 .container
 	width 100%
@@ -24,6 +32,9 @@
 		margin-left 150px
 		border 1px solid #1abc9c
 		padding 10px
+		position absolute
+		top 0
+		margin-top 6px 
 		
 		img
 			display block
@@ -55,3 +66,42 @@
 			&:hover
 				color #1abc9c
 				border 1px solid #1abc84
+				
+
+
+	.admin
+		position relative
+		width 190px
+		padding-right 11px
+
+		button
+			cursor pointer
+			display inline
+			padding 6px 12px
+			margin-left 5px
+			vertical-align middle
+			white-space nowrap
+			-ms-touch-action manipulation
+			touch-action manipulation
+			border 1px solid transparent
+			
+		.btn-admin
+			margin-right 4px
+			width 100%
+			display block
+			
+		.btn-group
+			text-align center
+			// width 100%
+			// margin-left 2px
+			
+		.btn-save
+			display inline !important
+			text-align center
+			width 100%
+
+		form
+			input
+				display block
+				padding 3px
+				margin 5px 
