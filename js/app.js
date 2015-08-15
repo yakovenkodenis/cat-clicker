@@ -107,15 +107,6 @@
                     document.getElementsByClassName('btn-group')[0],
                     'hidden'
                 );
-
-                var photo = document.getElementsByClassName('photo-placeholder')[0];
-
-                if(photo.style.marginTop === '4em') {
-                    photo.style.marginTop = '6px';
-                } else {
-                    photo.style.marginTop = '4em';
-                }
-
                 controller.updateAdminPanel(elements);
             });
 
@@ -168,6 +159,11 @@
                     listView.render(model.getAllKittens().length);
                     photoView.init();
                     photoView.render(model.getAllKittens()[currentKittenIndex]);
+
+                    var oldContainer = document.getElementsByClassName('container')[0];
+                    var newContainer = oldContainer.cloneNode(true);
+                    oldContainer.parentNode.replaceChild(newContainer, oldContainer);
+                    controller.addEventListeners();
                 }
             });
         },
@@ -245,6 +241,10 @@
 
     var photoView = {
         init: function() {
+            var checkForPlaceholder = document.getElementsByClassName('photo-placeholder')[0];
+            if(checkForPlaceholder) {
+                checkForPlaceholder.parentNode.removeChild(checkForPlaceholder);
+            }
             // create a div
             var divPlaceholder = document.createElement('div');
             divPlaceholder.className = 'photo-placeholder';
@@ -269,6 +269,8 @@
 
         render: function(kitten) {
             var counter = document.getElementsByClassName('counter')[0];
+            var img = document.getElementsByClassName('kitten-img')[0];
+            img.src = kitten.url;
             counter.innerText = 'Clicks count = ' + kitten.counter;
         }
     }
