@@ -1,0 +1,57 @@
+*
+	-webkit-box-sizing border-box 
+	-moz-box-sizing border-box 
+	box-sizing border-box
+
+.container
+	width 100%
+	padding 10px
+	border 1px solid #999
+	position relative
+	
+	.clicks-count
+		position absolute
+		text-align center
+		
+	.cat
+		display inline-block
+		h3
+			display block
+			text-align center
+			
+	.photo-placeholder
+		display inline-block
+		margin-left 150px
+		border 1px solid #1abc9c
+		padding 10px
+		
+		img
+			display block
+			margin-left auto !important
+			margin-right auto !important
+		
+		h3
+			text-align center
+			
+	.kittens-list
+		display inline-block
+		list-style-type none
+		padding 10px
+		width 8em
+		position relative
+		
+		li
+			text-align center
+			margin 15px
+			padding 10px
+			width auto
+			display block
+			white-space nowrap
+			word-spacing 3px
+			border 1px solid #1abc9c
+			transition .3s all ease-in-out
+			cursor pointer
+
+			&:hover
+				color #1abc9c
+				border 1px solid #1abc84
