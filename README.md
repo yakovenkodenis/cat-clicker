@@ -6,5 +6,5 @@ It counts and prints every user's click being made for each cat's photo. Each ca
   
 | Branch  | Description |
 | ------------- | ------------- |
-| _master_  | **VanillaJS version.** The app stores the state of every cat in the localStorage and has the admin panel for updating things.  |
-| _knockout_  | **KnockoutJS version.** No localStorage or admin panel, just basic functionality. |
+| _master_  | **VanillaJS version.** The app stores the state of every cat in the localStorage and has the admin panel for updating things. Has some styles. |
+| _knockout_  | **KnockoutJS version.** No localStorage or admin panel, just basic functionality. Has no styles. |
